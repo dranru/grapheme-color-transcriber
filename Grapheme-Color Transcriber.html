@@ -1,0 +1,110 @@
+<!-- Code by D.R.Anru -->
+<!DOCTYPE html>
+<html>
+<body>
+	<h1 style="font-family: Consolas;font-size: 24px;">Grapheme-Color Transcriber<h1/>
+	<p style="font-family: Arial;font-size: 12px;">This page uses HTML5 canvas and plain Javascript to simulate my colors for letters and numbers. Type or paste in text below to produce a code of colors representing the letters and numbers provided.</p>
+	<textarea id="input" rows="10" cols="60" oninput="transcribeText()"></textarea>
+	<canvas id="g" height="800" width="1700">This page requires an HTML5-ready browser to function.</canvas>
+</body>
+<script>
+
+var A="#ff0000";
+var B="#09ff00";
+var C="#00fff7";
+var D="#008004";
+var E="#fa7602";
+var F="#f7da00";
+var G="#008004";
+var H="#a64c03";
+var I="#00fff7";
+var J="#574235";
+var K="#a64c03";
+var L="#7700ff";
+var M="#f78383";
+var N="#7a7a7a";
+var O="#ffffff";
+var P="#008004";
+var Q="#a64c03";
+var R="#fcd4b1";
+var S="#ff00e6";
+var T="#fcfa68";
+var U="#060521";
+var V="#fa9507";
+var W="#570101";
+var X="#fab700";
+var Y="#92fa00";
+var Z="#0008fa";
+var ZERO="#ffffff";
+var ONE="#00fff7";
+var TWO="#09ff00";
+var THREE="#f78383";
+var FOUR="#008004";
+var FIVE="#a64c03";
+var SIX="#ff0000";
+var SEVEN="#fa7602";
+var EIGHT="#0008fa";
+var NINE="#fcd4b1";
+const letterColors=[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z];
+const numberColors=[ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE];
+
+var canvas = document.getElementById('g');
+var c = canvas.getContext('2d');
+
+c.fillStyle="#888888";
+c.fillRect(0,0,2070,1240);
+c.lineWidth="40";
+
+function transcribeText()
+{
+	var i=0;
+	var cursor=0;
+	var lineBreak=0;
+	var currentChar;
+	var text=document.getElementById("input").value;
+	c.font="20px Arial";
+	c.fillStyle="#888888";
+	c.fillRect(0,0,2070,1240);
+	for(i=0;i<text.length;i++)
+	{
+		currentChar=text[i].charCodeAt();
+	    if(cursor>1200 || currentChar==10)
+		{
+			lineBreak+=80;
+			cursor=0;
+		}
+		if(currentChar>=48 && currentChar<=57)			// if number	
+		{
+			c.fillStyle=numberColors[currentChar-48];
+			c.fillRect(20+cursor,100+lineBreak,c.lineWidth,c.lineWidth);
+			c.fillText(text[i],20+cursor,100+lineBreak);
+			cursor+=c.lineWidth;
+		}
+		else if(currentChar>=65 && currentChar<=90 || currentChar>=97 && currentChar<=122)			// if letter
+		{
+			if(currentChar>=65 && currentChar<=90) 	// if uppercase
+			{
+				c.fillStyle=letterColors[currentChar-65];
+				c.fillRect(20+cursor,100+lineBreak,c.lineWidth,c.lineWidth);
+				c.fillText(text[i],20+cursor,100+lineBreak);
+				cursor+=c.lineWidth;
+			}
+			else if(currentChar>=97 && currentChar<=122) 	// if lowercase
+			{
+				c.fillStyle=letterColors[currentChar-97];
+				c.fillRect(20+cursor,100+lineBreak,c.lineWidth,c.lineWidth);
+				c.fillText(text[i],20+cursor,100+lineBreak);
+				cursor+=c.lineWidth;
+			}
+		}
+		else if(currentChar==32)	// if <space>
+			cursor+=c.lineWidth;
+		else
+		{
+			continue;
+		}
+			
+	}
+}
+</script>
+</html>
