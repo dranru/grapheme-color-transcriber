@@ -68,8 +68,10 @@ function transcribeText()
 	for(i=0;i<text.length;i++)
 	{
 		currentChar=text[i].charCodeAt();
-	    if(cursor>1200 || currentChar==10)
+		if(cursor>1200 || currentChar==10)
 		{
+			if(currentChar==32)
+				continue;
 			lineBreak+=80;
 			cursor=0;
 		}
@@ -103,7 +105,7 @@ function transcribeText()
 		{
 			continue;
 		}
-			
+		console.log(cursor);
 	}
 }
 </script>
